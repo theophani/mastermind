@@ -2,11 +2,11 @@
                 GameType = type;
         }
 
-        function ToggleType() {
+        function toggleType(element) {
                 if (GameType === 0) GameType = 1;
                 else GameType = 0;
-                document.images[120].src = rules[GameType].src;
-                ReloadGame();
+                reloadGame();
+                element.innerText = GameType ? 'Use unique colour rules.' : 'Use repeat colour rules.';
         }
 
         function initializeVariables() {
@@ -42,14 +42,14 @@
                         "orange.gif"
                 ];
 
-                turn = new Make2DNumberArray(12, 10);
+                turn = new make2DNumberArray(12, 10);
 
         }
 
 
         function initializeBoard() {
                 initializeVariables();
-                MakeAnswer(GameType);
+                makeAnswer(GameType);
                 for (var i=0; i<4; i++) {
                         document.images[110+i].src = "question.gif";
                 }
@@ -58,7 +58,7 @@
 
         function initializeNext(i) {
                 if ( i==11 ) {
-                        GameOver(0);
+                        gameOver(0);
                 }
                 else {
                         if ( i>1 ) {
@@ -66,14 +66,14 @@
                         }
                         document.images[ i*10 - 1 ].src = "submit.gif";
                         for (var j=0; j<4; j++){
-                                document.images[ (i-1)*10 + j ].src = colours[0].src;
+                                document.images[ (i-1)*10 + j ].src = colours[0];
                         }
                         turn[i][5] = 1;
                 }
         }
 
 
-        function MakeAnswer(type) {
+        function makeAnswer(type) {
                 var i, j;
                 if (type == 1) {
                         for (i = 1; i<=4; i++) {
@@ -91,7 +91,7 @@
                 }
         }
 
-        function Make2DNumberArray(r,c) {
+        function make2DNumberArray(r,c) {
                 var i, j;
                 this.length = r;
                 for (i = 1; i<=r; i++) {
@@ -104,42 +104,42 @@
               return this;
         }
 
-        function TurnStatus(i,j) {
+        function turnStatus(i,j) {
                 if ( turn[i][5] ) {
                         if ( j < 5 ) {
-                                RotateColour(i,j);
+                                rotateColour(i,j);
                         }
                         else if ( j==10 && turn[i][1] && turn[i][2] && turn[i][3] && turn[i][4] ) {
-                                SubmitGuess(i);
+                                submitGuess(i);
                         }
                 }
         }
 
 
-        function RotateColour(i,j) {
+        function rotateColour(i,j) {
                 n = turn[i][j];
                 if (n == 6 ) turn[i][j] = 0;
                 else turn[i][j] = n+1;
-                document.images[ (i-1)*10 + (j-1) ].src = colours[turn[i][j]].src;
+                document.images[ (i-1)*10 + (j-1) ].src = colours[turn[i][j]];
         }
 
 
-        function SubmitGuess(i) {
+        function submitGuess(i) {
                 var j;
                 turn[i][5] = 0;
                 for (j=1; j<=4; j++) {
                         guess[j] = turn[i][j];
                 }
                 if ( (guess[1] == answer[1]) && (guess[2] == answer[2]) && (guess[3] == answer[3]) && (guess[4] == answer[4]) ) {
-                        GameOver(1);
+                        gameOver(1);
                 }
                 else {
-                        ReportResults(i);
+                        reportResults(i);
                         initializeNext(i+1);
                 }
         }
 
-        function GameOver(win) {
+        function gameOver(win) {
                 if (win) {
                         document.images[100].src = "letterW.gif";
                         document.images[101].src = "letterI.gif";
@@ -156,7 +156,7 @@
         }
 
 
-        function ReportResults(i) {
+        function reportResults(i) {
                 var j;
                 for (j=1; j<=4; j++) {
                         dummyanswer[j] = answer[j];
@@ -193,7 +193,7 @@
                 }
                 mySort(clues,4);
                 for (j=1; j<=4; j++) {
-                        document.images[ (i-1)*10 + j + 4 ].src = cluepegs[ clues[j] ].src;
+                        document.images[ (i-1)*10 + j + 4 ].src = cluepegs[ clues[j] ];
                 }
         }
 
@@ -211,19 +211,19 @@
                 }
         }
 
-        function ReloadGame() {
+        function reloadGame() {
                 var i;
                 for (i=0; i<109; i++) document.images[i].src = "blank.gif";
                 initializeBoard();
         }
 
-        function RevealAnswer() {
+        function revealAnswer() {
                 var i;
                 for (i=1; i<=10; i++) {
                         turn[i][5] = 0;
                 }
                 for (i=1; i<=4; i++) {
-                        document.images[109+i].src = colours[answer[i]].src;
+                        document.images[109+i].src = colours[answer[i]];
                 }
 
         }
