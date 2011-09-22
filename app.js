@@ -3,8 +3,7 @@
         }
 
         function toggleType(element) {
-                if (GameType === 0) GameType = 1;
-                else GameType = 0;
+                GameType = GameType === 0 ? 1 : 0;
                 reloadGame();
                 element.innerText = GameType ? 'Use unique colour rules.' : 'Use repeat colour rules.';
         }
@@ -42,7 +41,7 @@
                         "orange.gif"
                 ];
 
-                turn = new make2DNumberArray(12, 10);
+                turn = new Matrix(12, 10);
 
         }
 
@@ -91,11 +90,10 @@
                 }
         }
 
-        function make2DNumberArray(r,c) {
+        function Matrix(r,c) {
                 var i, j;
-                this.length = r;
                 for (i = 1; i<=r; i++) {
-                        this[i] = new Array(c);
+                        this[i] = [];
                         for (j = 1; j<=c; j++) {
                                 this[i][j]     = 0;
                         }
