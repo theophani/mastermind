@@ -21,23 +21,26 @@
 
                 dummy = [null, 6, 5, 4, 3, 2, 1];
 
-                rules = new MakeImageArray(3);
-                rules[0].src = "repeated.gif";
-                rules[1].src = "unique.gif";
+                rules = [
+                        "repeated.gif",
+                        "unique.gif"
+                ];
 
-                cluepegs = new MakeImageArray(3);
-                cluepegs[0].src = "blank.gif";
-                cluepegs[1].src = "black.gif";
-                cluepegs[2].src = "white.gif";
+                cluepegs = [
+                        "blank.gif",
+                        "black.gif",
+                        "white.gif"
+                ];
 
-                colours = new MakeImageArray(7);
-                colours[0].src = "question.gif";
-                colours[1].src = "yellow.gif";
-                colours[2].src = "green.gif";
-                colours[3].src = "blue.gif";
-                colours[4].src = "red.gif";
-                colours[5].src = "grey.gif";
-                colours[6].src = "orange.gif";
+                colours = [
+                        "question.gif",
+                        "yellow.gif",
+                        "green.gif",
+                        "blue.gif",
+                        "red.gif",
+                        "grey.gif",
+                        "orange.gif"
+                ];
 
                 turn = new Make2DNumberArray(12, 10);
 
@@ -86,16 +89,6 @@
                                 mySort(dummy,7-i);
                         }
                 }
-        }
-
-        function MakeImageArray(n) {
-                var i;
-                this.length = n;
-                for (i = 0; i<n; i++) {
-                        this[i] = new Image();
-                }
-
-              return this;
         }
 
         function Make2DNumberArray(r,c) {
