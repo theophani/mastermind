@@ -102,10 +102,10 @@ var submitGuess = function (i) {
   var guess = [];
   var j;
   turn[i][5] = 0;
-  for (j=1; j<=4; j++) {
-    guess[j] = turn[i][j];
+  for (j=0; j<4; j++) {
+    guess[j] = turn[i][j+1];
   }
-  if ( (guess[1] == answer[1]) && (guess[2] == answer[2]) && (guess[3] == answer[3]) && (guess[4] == answer[4]) ) {
+  if ( (guess[0] == answer[1]) && (guess[1] == answer[2]) && (guess[2] == answer[3]) && (guess[3] == answer[4]) ) {
     gameOver(1);
   } else {
     reportResults(i, guess);
@@ -146,30 +146,30 @@ var reportResults = function (i, guess) {
 
   // check for exact matches
   [0, 1, 2, 3].forEach(function (j) {
-    if ( guess[j+1] == dummyanswer[j+1] ) {
+    if ( guess[j] == dummyanswer[j+1] ) {
       clues[j] = 2;
-      guess[j+1] = 0;
+      guess[j] = 0;
       dummyanswer[j+1] = 7;
     }
   });
 
   // check for other matches
   [0, 1, 2, 3].forEach(function (j) {
-    if ( guess[1] == dummyanswer[j+1] ) {
+    if ( guess[0] == dummyanswer[j+1] ) {
+      clues[j] = 1;
+      guess[0] = 0;
+      dummyanswer[j+1] = 7;
+    } else if ( guess[1] == dummyanswer[j+1] ) {
       clues[j] = 1;
       guess[1] = 0;
-      dummyanswer[j+1] = 7;
+      dummyanswer[j] = 7;
     } else if ( guess[2] == dummyanswer[j+1] ) {
       clues[j] = 1;
       guess[2] = 0;
-      dummyanswer[j] = 7;
+      dummyanswer[j+1] = 7;
     } else if ( guess[3] == dummyanswer[j+1] ) {
       clues[j] = 1;
       guess[3] = 0;
-      dummyanswer[j+1] = 7;
-    } else if ( guess[4] == dummyanswer[j+1] ) {
-      clues[j] = 1;
-      guess[4] = 0;
       dummyanswer[j+1] = 7;
     }
   });
