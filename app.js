@@ -101,7 +101,7 @@ var rotateColour =  function (i, j) {
   if ( !turn[i][4] ) return;
 
   n = turn[i][j];
-  if (n == 6 ) turn[i][j] = 0;
+  if (n === 6 ) turn[i][j] = 0;
   else turn[i][j] = n+1;
   document.images[ i * 10 + j ].src = colours[turn[i][j]];
 };
@@ -135,7 +135,7 @@ var reportResults = function (i, guess, reference) {
 
   // check for exact matches
   [0, 1, 2, 3].forEach(function (j) {
-    if ( guess[j] == answer[j] ) {
+    if ( guess[j] === answer[j] ) {
       clues[j] = 2;
       guess[j] = 0;
       answer[j] = 7;
@@ -144,21 +144,21 @@ var reportResults = function (i, guess, reference) {
 
   // check for other matches
   [0, 1, 2, 3].forEach(function (j) {
-    if ( guess[0] == answer[j] ) {
-      clues[j] = 1;
+    if ( guess[0] === answer[j] ) {
       guess[0] = 0;
-      answer[j] = 7;
-    } else if ( guess[1] == answer[j] ) {
       clues[j] = 1;
+      answer[j] = 7;
+    } else if ( guess[1] === answer[j] ) {
       guess[1] = 0;
-      answer[j] = 7;
-    } else if ( guess[2] == answer[j] ) {
       clues[j] = 1;
+      answer[j] = 7;
+    } else if ( guess[2] === answer[j] ) {
       guess[2] = 0;
-      answer[j] = 7;
-    } else if ( guess[3] == answer[j] ) {
       clues[j] = 1;
+      answer[j] = 7;
+    } else if ( guess[3] === answer[j] ) {
       guess[3] = 0;
+      clues[j] = 1;
       answer[j] = 7;
     }
   });
