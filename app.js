@@ -1,5 +1,7 @@
 var gameType = 0;
 
+var turn;
+
 var colours = [
   "question.gif",
   "yellow.gif",
@@ -10,15 +12,44 @@ var colours = [
   "orange.gif"
 ];
 
-var answer,
-    turn;
-
 var initializeBoard = function() {
-  turn = new Matrix(9, 5);
-  answer = makeAnswer(gameType);
+  turn = new Matrix(10, 5);
+  var answer = makeAnswer(gameType);
   [0, 1, 2, 3].forEach(function (i) {
     document.images[110+i].src = colours[0];
   });
+
+  window.revealAnswer = function () {
+    var i;
+    for (i=0; i<10; i++) {
+      turn[i][4] = 0;
+    }
+    [0, 1, 2, 3].forEach(function (i) {
+      document.images[110+i].src = colours[answer[i]];
+    });
+  };
+
+  window.submitGuess = function (i) {
+    if ( ! (turn[i][0] && turn[i][1] && turn[i][2] && turn[i][3]) ) return;
+
+    turn[i][4] = 0;
+
+    var guess = [0, 1, 2, 3].map(function (j) {
+      return turn[i][j];
+    });
+
+    var correct = guess.every(function (v, k) {
+      return v === answer[k];
+    });
+
+    if ( correct ) {
+      gameOver(1);
+    } else {
+      reportResults(i, guess, answer);
+      initializeRow(i+1);
+    }
+  };
+
   initializeRow(0);
 };
 
@@ -30,9 +61,9 @@ var initializeRow = function (i) {
       document.images[ i * 10 - 1 ].src = "blank.gif";
     }
     document.images[ (i+1) * 10 - 1 ].src = "submit.gif";
-    for (var j=0; j<4; j++){
+    [0, 1, 2, 3].forEach(function (j) {
       document.images[ i * 10 + j ].src = colours[0];
-    }
+    });
     turn[i][4] = 1;
   }
 };
@@ -74,27 +105,6 @@ var rotateColour =  function (i, j) {
   document.images[ i * 10 + j ].src = colours[turn[i][j]];
 };
 
-var submitGuess = function (i) {
-  if ( ! (turn[i][0] && turn[i][1] && turn[i][2] && turn[i][3]) ) return;
-
-  turn[i][4] = 0;
-
-  var guess = [0, 1, 2, 3].map(function (j) {
-    return turn[i][j];
-  });
-
-  var correct = guess.every(function (v, k) {
-    return v === answer[k];
-  });
-
-  if ( correct ) {
-    gameOver(1);
-  } else {
-    reportResults(i, guess);
-    initializeRow(i+1);
-  }
-};
-
 var gameOver = function (win) {
   if (win) {
     document.images[100].src = "letterW.gif";
@@ -111,7 +121,7 @@ var gameOver = function (win) {
 };
 
 
-var reportResults = function (i, guess) {
+var reportResults = function (i, guess, answer) {
   var cluepegs = [
     "blank.gif",
     "black.gif",
@@ -169,17 +179,6 @@ var reloadGame = function () {
   var i;
   for (i=0; i<109; i++) document.images[i].src = "blank.gif";
   initializeBoard();
-};
-
-var revealAnswer = function () {
-  var i;
-  for (i=0; i<10; i++) {
-    turn[i][4] = 0;
-  }
-  [0, 1, 2, 3].forEach(function (i) {
-    document.images[110+i].src = colours[answer[i]];
-  });
-
 };
 
 var toggleType = function (event) {
