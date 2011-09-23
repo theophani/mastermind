@@ -35,10 +35,10 @@ var initializeBoard = function() {
   for (var i=0; i<4; i++) {
     document.images[110+i].src = "question.gif";
   }
-  initializeNext(1);
+  initializeRow(1);
 };
 
-var initializeNext = function (i) {
+var initializeRow = function (i) {
   if ( i==11 ) {
     gameOver(0);
   } else {
@@ -57,15 +57,15 @@ var makeAnswer = function (type) {
   var answer = [];
   var options = [1, 2, 3, 4, 5, 6];
   var i, j;
-  for (i = 0; i < 4; i++) {
+  [0, 1, 2, 3].forEach(function (i) {
     j = Math.floor(Math.random() * options.length);
-    answer[i+1] = options[j];
+    answer[i] = options[j];
     if (type === 0) { // unique. remove options
       options[j] = 0;
       options.sort();
       options.shift();
     }
-  }
+  });
   return answer;
 };
 
@@ -99,17 +99,20 @@ var rotateColour =  function (i, j) {
 };
 
 var submitGuess = function (i) {
-  var guess = [];
-  var j;
+  var correct;
+  var guess = [0, 1, 2, 3].map(function (j) {
+    return turn[i][j+1];
+  });
+
   turn[i][5] = 0;
-  for (j=0; j<4; j++) {
-    guess[j] = turn[i][j+1];
-  }
-  if ( (guess[0] == answer[1]) && (guess[1] == answer[2]) && (guess[2] == answer[3]) && (guess[3] == answer[4]) ) {
+
+  correct = guess.every(function (v, i) { return v === answer[i] });
+
+  if ( correct ) {
     gameOver(1);
   } else {
     reportResults(i, guess);
-    initializeNext(i+1);
+    initializeRow(i+1);
   }
 };
 
@@ -141,36 +144,36 @@ var reportResults = function (i, guess) {
 
   // build a clone of answer
   [0, 1, 2, 3].forEach(function (j) {
-    dummyanswer[j+1] = answer[j+1];
+    dummyanswer[j] = answer[j];
   });
 
   // check for exact matches
   [0, 1, 2, 3].forEach(function (j) {
-    if ( guess[j] == dummyanswer[j+1] ) {
+    if ( guess[j] == dummyanswer[j] ) {
       clues[j] = 2;
       guess[j] = 0;
-      dummyanswer[j+1] = 7;
+      dummyanswer[j] = 7;
     }
   });
 
   // check for other matches
   [0, 1, 2, 3].forEach(function (j) {
-    if ( guess[0] == dummyanswer[j+1] ) {
+    if ( guess[0] == dummyanswer[j] ) {
       clues[j] = 1;
       guess[0] = 0;
-      dummyanswer[j+1] = 7;
-    } else if ( guess[1] == dummyanswer[j+1] ) {
+      dummyanswer[j] = 7;
+    } else if ( guess[1] == dummyanswer[j] ) {
       clues[j] = 1;
       guess[1] = 0;
       dummyanswer[j] = 7;
-    } else if ( guess[2] == dummyanswer[j+1] ) {
+    } else if ( guess[2] == dummyanswer[j] ) {
       clues[j] = 1;
       guess[2] = 0;
-      dummyanswer[j+1] = 7;
-    } else if ( guess[3] == dummyanswer[j+1] ) {
+      dummyanswer[j] = 7;
+    } else if ( guess[3] == dummyanswer[j] ) {
       clues[j] = 1;
       guess[3] = 0;
-      dummyanswer[j+1] = 7;
+      dummyanswer[j] = 7;
     }
   });
 
@@ -194,9 +197,9 @@ var revealAnswer = function () {
   for (i=1; i<=10; i++) {
     turn[i][5] = 0;
   }
-  for (i=1; i<=4; i++) {
-    document.images[109+i].src = colours[answer[i]];
-  }
+  [0, 1, 2, 3].forEach(function (i) {
+    document.images[110+i].src = colours[answer[i]];
+  });
 
 };
 
