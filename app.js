@@ -20,7 +20,6 @@ var answer,
     dummyanswer,
     guess,
     clues,
-    dummy,
     turn;
 
 var toggleType = function (element) {
@@ -39,7 +38,6 @@ var initializeVariables = function () {
   dummyanswer = [];
   guess = [];
   clues = [];
-  dummy = [null, 6, 5, 4, 3, 2, 1];
   turn = new Matrix(12, 10);
 };
 
@@ -69,18 +67,19 @@ var initializeNext = function (i) {
 };
 
 var makeAnswer = function (type) {
+  var options = [6, 5, 4, 3, 2, 1];
   var i, j;
-  if (type == 1) { // repeated
-    for (i = 1; i<=4; i++) {
-      j = Math.round( 1 + Math.random()*(6-1) );
-      answer[i] = dummy[j];
+  if (type === 1) { // repeated
+    for (i = 0; i < 4; i++) {
+      j = Math.round(Math.random() * 5);
+      answer[i+1] = options[j];
     }
   } else { // unique
-    for (i = 1; i<=4; i++) {
-      j = Math.round( 1 + Math.random()*(6-i) );
-      answer[i] = dummy[j];
-      dummy[j] = 0;
-      mySort(dummy,7-i);
+    for (i = 0; i < 4; i++) {
+      j = Math.round(Math.random() * (5 - i));
+      answer[i+1] = options[j];
+      options[j] = 0;
+      mySort(options,7-i);
     }
   }
 };
