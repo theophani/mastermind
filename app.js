@@ -41,10 +41,9 @@ var initializeVariables = function () {
   turn = new Matrix(12, 10);
 };
 
-
 var initializeBoard = function() {
   initializeVariables();
-  makeAnswer(gameType);
+  answer = makeAnswer(gameType);
   for (var i=0; i<4; i++) {
     document.images[110+i].src = "question.gif";
   }
@@ -67,6 +66,7 @@ var initializeNext = function (i) {
 };
 
 var makeAnswer = function (type) {
+  var answer = [];
   var options = [1, 2, 3, 4, 5, 6];
   var i, j;
   for (i = 0; i < 4; i++) {
@@ -78,6 +78,7 @@ var makeAnswer = function (type) {
       options.shift();
     }
   }
+  return answer;
 };
 
 var Matrix = function (r, c) {
