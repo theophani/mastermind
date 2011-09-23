@@ -2,22 +2,52 @@
 <html>
 <head>
 
-   <meta name="Author" content="Tiffany">
-   <title>Mastermind</title>
+<title>Mastermind</title>
+<meta name="Author" content="Tiffany">
 
 <style>
-<!--
-A{text-decoration:none}
--->
+body {
+  color: #fff;
+  background-color: #000;
+}
+a {
+  text-decoration: none;
+  color: #DED4AE;
+}
+a:visited, a:hover, a:focus, a:active {
+  color: #9CB468;
+}
+img {
+  width: 20px;
+  height: 20px;
+  border: 0;
+}
+td.peg {
+  width: 20px;
+  height: 20px;
+}
+td.clue {
+  width: 10px;
+  height: 20px;
+}
+td.clue img {
+  width: 10px;
+  height: 10px;
+}
+td.action {
+  width: 75px;
+}
+td.action img {
+  width: 75px;
+}
+
 </style>
 
 <script src="app.js"></script>
 
 </head>
 
-<body text="#FFFFFF" bgcolor="#000000"
-      link="#DED4AE" vlink="#9CB468" alink="#9CB468"
-      onLoad="setGameType(0); initializeBoard(); return true">
+<body onLoad="setGameType(0); initializeBoard();">
 
 <br>
 
@@ -30,210 +60,210 @@ A{text-decoration:none}
 <td valign="center" cellpadding="0">
 <font face="verdana,arial" size="-1">
 
-        <table cols="15" cellpadding="0" cellspacing="2">
+  <table cols="15" cellpadding="0" cellspacing="2">
 
 <!-- row 1 -->
 <tr>
-<td width="20" valign="center" align="center"><a href="#" onClick="turnStatus(1,1)"><img src="blank.gif" width="20" height="20" border="0"></a></td>
-<td width="20" valign="center" align="center"><a href="#" onClick="turnStatus(1,2)"><img src="blank.gif" width="20" height="20" border="0"></a></td>
-<td width="20" valign="center" align="center"><a href="#" onClick="turnStatus(1,3)"><img src="blank.gif" width="20" height="20" border="0"></a></td>
-<td width="20" valign="center" align="center"><a href="#" onClick="turnStatus(1,4)"><img src="blank.gif" width="20" height="20" border="0"></a></td>
+<td class="peg"><a href="#" onClick="turnStatus(1,1)"><img src="blank.gif" /></a></td>
+<td class="peg"><a href="#" onClick="turnStatus(1,2)"><img src="blank.gif" /></a></td>
+<td class="peg"><a href="#" onClick="turnStatus(1,3)"><img src="blank.gif" /></a></td>
+<td class="peg"><a href="#" onClick="turnStatus(1,4)"><img src="blank.gif" /></a></td>
 
-<td width="10" valign="center" align="center"><img src="blank.gif" width="10" height="20" border="0"></td>
+<td class="clue"><img src="blank.gif" width="10" height="20" border="0"></td>
 
-<td width="10" valign="center" align="center"><img src="blank.gif" width="10" height="10" border="0"></td>
-<td width="10" valign="center" align="center"><img src="blank.gif" width="10" height="10" border="0"></td>
-<td width="10" valign="center" align="center"><img src="blank.gif" width="10" height="10" border="0"></td>
-<td width="10" valign="center" align="center"><img src="blank.gif" width="10" height="10" border="0"></td>
+<td class="clue"><img src="blank.gif" /></td>
+<td class="clue"><img src="blank.gif" /></td>
+<td class="clue"><img src="blank.gif" /></td>
+<td class="clue"><img src="blank.gif" /></td>
 
-<td width="75" valign="center" align="center"><a href="#" onClick="turnStatus(1,10)"><img src="blank.gif" width="75" height="20" border="0"></a></td>
+<td class="action"><a href="#" onClick="turnStatus(1,10)"><img src="blank.gif" /></a></td>
 </tr>
 
 <!-- row 2 -->
 <tr>
-<td width="20" valign="center" align="center"><a href="#" onClick="turnStatus(2,1)"><img src="blank.gif" width="20" height="20" border="0"></a></td>
-<td width="20" valign="center" align="center"><a href="#" onClick="turnStatus(2,2)"><img src="blank.gif" width="20" height="20" border="0"></a></td>
-<td width="20" valign="center" align="center"><a href="#" onClick="turnStatus(2,3)"><img src="blank.gif" width="20" height="20" border="0"></a></td>
-<td width="20" valign="center" align="center"><a href="#" onClick="turnStatus(2,4)"><img src="blank.gif" width="20" height="20" border="0"></a></td>
+<td class="peg"><a href="#" onClick="turnStatus(2,1)"><img src="blank.gif" /></a></td>
+<td class="peg"><a href="#" onClick="turnStatus(2,2)"><img src="blank.gif" /></a></td>
+<td class="peg"><a href="#" onClick="turnStatus(2,3)"><img src="blank.gif" /></a></td>
+<td class="peg"><a href="#" onClick="turnStatus(2,4)"><img src="blank.gif" /></a></td>
 
-<td width="10" valign="center" align="center"><img src="blank.gif" width="10" height="20" border="0"></td>
+<td class="clue"><img src="blank.gif" width="10" height="20" border="0"></td>
 
-<td width="10" valign="center" align="center"><img src="blank.gif" width="10" height="10" border="0"></td>
-<td width="10" valign="center" align="center"><img src="blank.gif" width="10" height="10" border="0"></td>
-<td width="10" valign="center" align="center"><img src="blank.gif" width="10" height="10" border="0"></td>
-<td width="10" valign="center" align="center"><img src="blank.gif" width="10" height="10" border="0"></td>
+<td class="clue"><img src="blank.gif" /></td>
+<td class="clue"><img src="blank.gif" /></td>
+<td class="clue"><img src="blank.gif" /></td>
+<td class="clue"><img src="blank.gif" /></td>
 
-<td width="75" valign="center" align="center"><a href="#" onClick="turnStatus(2,10)"><img src="blank.gif" width="75" height="20" border="0"></a></td>
+<td class="action"><a href="#" onClick="turnStatus(2,10)"><img src="blank.gif" /></a></td>
 </tr>
 
 <!-- row 3 -->
 <tr>
-<td width="20" valign="center" align="center"><a href="#" onClick="turnStatus(3,1)"><img src="blank.gif" width="20" height="20" border="0"></a></td>
-<td width="20" valign="center" align="center"><a href="#" onClick="turnStatus(3,2)"><img src="blank.gif" width="20" height="20" border="0"></a></td>
-<td width="20" valign="center" align="center"><a href="#" onClick="turnStatus(3,3)"><img src="blank.gif" width="20" height="20" border="0"></a></td>
-<td width="20" valign="center" align="center"><a href="#" onClick="turnStatus(3,4)"><img src="blank.gif" width="20" height="20" border="0"></a></td>
+<td class="peg"><a href="#" onClick="turnStatus(3,1)"><img src="blank.gif" /></a></td>
+<td class="peg"><a href="#" onClick="turnStatus(3,2)"><img src="blank.gif" /></a></td>
+<td class="peg"><a href="#" onClick="turnStatus(3,3)"><img src="blank.gif" /></a></td>
+<td class="peg"><a href="#" onClick="turnStatus(3,4)"><img src="blank.gif" /></a></td>
 
-<td width="10" valign="center" align="center"><img src="blank.gif" width="10" height="20" border="0"></td>
+<td class="clue"><img src="blank.gif" width="10" height="20" border="0"></td>
 
-<td width="10" valign="center" align="center"><img src="blank.gif" width="10" height="10" border="0"></td>
-<td width="10" valign="center" align="center"><img src="blank.gif" width="10" height="10" border="0"></td>
-<td width="10" valign="center" align="center"><img src="blank.gif" width="10" height="10" border="0"></td>
-<td width="10" valign="center" align="center"><img src="blank.gif" width="10" height="10" border="0"></td>
+<td class="clue"><img src="blank.gif" /></td>
+<td class="clue"><img src="blank.gif" /></td>
+<td class="clue"><img src="blank.gif" /></td>
+<td class="clue"><img src="blank.gif" /></td>
 
-<td width="75" valign="center" align="center"><a href="#" onClick="turnStatus(3,10)"><img src="blank.gif" width="75" height="20" border="0"></a></td>
+<td class="action"><a href="#" onClick="turnStatus(3,10)"><img src="blank.gif" /></a></td>
 </tr>
 
 <!-- row 4 -->
 <tr>
-<td width="20" valign="center" align="center"><a href="#" onClick="turnStatus(4,1)"><img src="blank.gif" width="20" height="20" border="0"></a></td>
-<td width="20" valign="center" align="center"><a href="#" onClick="turnStatus(4,2)"><img src="blank.gif" width="20" height="20" border="0"></a></td>
-<td width="20" valign="center" align="center"><a href="#" onClick="turnStatus(4,3)"><img src="blank.gif" width="20" height="20" border="0"></a></td>
-<td width="20" valign="center" align="center"><a href="#" onClick="turnStatus(4,4)"><img src="blank.gif" width="20" height="20" border="0"></a></td>
+<td class="peg"><a href="#" onClick="turnStatus(4,1)"><img src="blank.gif" /></a></td>
+<td class="peg"><a href="#" onClick="turnStatus(4,2)"><img src="blank.gif" /></a></td>
+<td class="peg"><a href="#" onClick="turnStatus(4,3)"><img src="blank.gif" /></a></td>
+<td class="peg"><a href="#" onClick="turnStatus(4,4)"><img src="blank.gif" /></a></td>
 
-<td width="10" valign="center" align="center"><img src="blank.gif" width="10" height="20" border="0"></td>
+<td class="clue"><img src="blank.gif" width="10" height="20" border="0"></td>
 
-<td width="10" valign="center" align="center"><img src="blank.gif" width="10" height="10" border="0"></td>
-<td width="10" valign="center" align="center"><img src="blank.gif" width="10" height="10" border="0"></td>
-<td width="10" valign="center" align="center"><img src="blank.gif" width="10" height="10" border="0"></td>
-<td width="10" valign="center" align="center"><img src="blank.gif" width="10" height="10" border="0"></td>
+<td class="clue"><img src="blank.gif" /></td>
+<td class="clue"><img src="blank.gif" /></td>
+<td class="clue"><img src="blank.gif" /></td>
+<td class="clue"><img src="blank.gif" /></td>
 
-<td width="75" valign="center" align="center"><a href="#" onClick="turnStatus(4,10)"><img src="blank.gif" width="75" height="20" border="0"></a></td>
+<td class="action"><a href="#" onClick="turnStatus(4,10)"><img src="blank.gif" /></a></td>
 </tr>
 
 <!-- row 5 -->
 <tr>
-<td width="20" valign="center" align="center"><a href="#" onClick="turnStatus(5,1)"><img src="blank.gif" width="20" height="20" border="0"></a></td>
-<td width="20" valign="center" align="center"><a href="#" onClick="turnStatus(5,2)"><img src="blank.gif" width="20" height="20" border="0"></a></td>
-<td width="20" valign="center" align="center"><a href="#" onClick="turnStatus(5,3)"><img src="blank.gif" width="20" height="20" border="0"></a></td>
-<td width="20" valign="center" align="center"><a href="#" onClick="turnStatus(5,4)"><img src="blank.gif" width="20" height="20" border="0"></a></td>
+<td class="peg"><a href="#" onClick="turnStatus(5,1)"><img src="blank.gif" /></a></td>
+<td class="peg"><a href="#" onClick="turnStatus(5,2)"><img src="blank.gif" /></a></td>
+<td class="peg"><a href="#" onClick="turnStatus(5,3)"><img src="blank.gif" /></a></td>
+<td class="peg"><a href="#" onClick="turnStatus(5,4)"><img src="blank.gif" /></a></td>
 
-<td width="10" valign="center" align="center"><img src="blank.gif" width="10" height="20" border="0"></td>
+<td class="clue"><img src="blank.gif" width="10" height="20" border="0"></td>
 
-<td width="10" valign="center" align="center"><img src="blank.gif" width="10" height="10" border="0"></td>
-<td width="10" valign="center" align="center"><img src="blank.gif" width="10" height="10" border="0"></td>
-<td width="10" valign="center" align="center"><img src="blank.gif" width="10" height="10" border="0"></td>
-<td width="10" valign="center" align="center"><img src="blank.gif" width="10" height="10" border="0"></td>
+<td class="clue"><img src="blank.gif" /></td>
+<td class="clue"><img src="blank.gif" /></td>
+<td class="clue"><img src="blank.gif" /></td>
+<td class="clue"><img src="blank.gif" /></td>
 
-<td width="75" valign="center" align="center"><a href="#" onClick="turnStatus(5,10)"><img src="blank.gif" width="75" height="20" border="0"></a></td>
+<td class="action"><a href="#" onClick="turnStatus(5,10)"><img src="blank.gif" /></a></td>
 </tr>
 
 <!-- row 6 -->
 <tr>
-<td width="20" valign="center" align="center"><a href="#" onClick="turnStatus(6,1)"><img src="blank.gif" width="20" height="20" border="0"></a></td>
-<td width="20" valign="center" align="center"><a href="#" onClick="turnStatus(6,2)"><img src="blank.gif" width="20" height="20" border="0"></a></td>
-<td width="20" valign="center" align="center"><a href="#" onClick="turnStatus(6,3)"><img src="blank.gif" width="20" height="20" border="0"></a></td>
-<td width="20" valign="center" align="center"><a href="#" onClick="turnStatus(6,4)"><img src="blank.gif" width="20" height="20" border="0"></a></td>
+<td class="peg"><a href="#" onClick="turnStatus(6,1)"><img src="blank.gif" /></a></td>
+<td class="peg"><a href="#" onClick="turnStatus(6,2)"><img src="blank.gif" /></a></td>
+<td class="peg"><a href="#" onClick="turnStatus(6,3)"><img src="blank.gif" /></a></td>
+<td class="peg"><a href="#" onClick="turnStatus(6,4)"><img src="blank.gif" /></a></td>
 
-<td width="10" valign="center" align="center"><img src="blank.gif" width="10" height="20" border="0"></td>
+<td class="clue"><img src="blank.gif" width="10" height="20" border="0"></td>
 
-<td width="10" valign="center" align="center"><img src="blank.gif" width="10" height="10" border="0"></td>
-<td width="10" valign="center" align="center"><img src="blank.gif" width="10" height="10" border="0"></td>
-<td width="10" valign="center" align="center"><img src="blank.gif" width="10" height="10" border="0"></td>
-<td width="10" valign="center" align="center"><img src="blank.gif" width="10" height="10" border="0"></td>
+<td class="clue"><img src="blank.gif" /></td>
+<td class="clue"><img src="blank.gif" /></td>
+<td class="clue"><img src="blank.gif" /></td>
+<td class="clue"><img src="blank.gif" /></td>
 
-<td width="75" valign="center" align="center"><a href="#" onClick="turnStatus(6,10)"><img src="blank.gif" width="75" height="20" border="0"></a></td>
+<td class="action"><a href="#" onClick="turnStatus(6,10)"><img src="blank.gif" /></a></td>
 </tr>
 
 <!-- row 7 -->
 <tr>
-<td width="20" valign="center" align="center"><a href="#" onClick="turnStatus(7,1)"><img src="blank.gif" width="20" height="20" border="0"></a></td>
-<td width="20" valign="center" align="center"><a href="#" onClick="turnStatus(7,2)"><img src="blank.gif" width="20" height="20" border="0"></a></td>
-<td width="20" valign="center" align="center"><a href="#" onClick="turnStatus(7,3)"><img src="blank.gif" width="20" height="20" border="0"></a></td>
-<td width="20" valign="center" align="center"><a href="#" onClick="turnStatus(7,4)"><img src="blank.gif" width="20" height="20" border="0"></a></td>
+<td class="peg"><a href="#" onClick="turnStatus(7,1)"><img src="blank.gif" /></a></td>
+<td class="peg"><a href="#" onClick="turnStatus(7,2)"><img src="blank.gif" /></a></td>
+<td class="peg"><a href="#" onClick="turnStatus(7,3)"><img src="blank.gif" /></a></td>
+<td class="peg"><a href="#" onClick="turnStatus(7,4)"><img src="blank.gif" /></a></td>
 
-<td width="10" valign="center" align="center"><img src="blank.gif" width="10" height="20" border="0"></td>
+<td class="clue"><img src="blank.gif" width="10" height="20" border="0"></td>
 
-<td width="10" valign="center" align="center"><img src="blank.gif" width="10" height="10" border="0"></td>
-<td width="10" valign="center" align="center"><img src="blank.gif" width="10" height="10" border="0"></td>
-<td width="10" valign="center" align="center"><img src="blank.gif" width="10" height="10" border="0"></td>
-<td width="10" valign="center" align="center"><img src="blank.gif" width="10" height="10" border="0"></td>
+<td class="clue"><img src="blank.gif" /></td>
+<td class="clue"><img src="blank.gif" /></td>
+<td class="clue"><img src="blank.gif" /></td>
+<td class="clue"><img src="blank.gif" /></td>
 
-<td width="75" valign="center" align="center"><a href="#" onClick="turnStatus(7,10)"><img src="blank.gif" width="75" height="20" border="0"></a></td>
+<td class="action"><a href="#" onClick="turnStatus(7,10)"><img src="blank.gif" /></a></td>
 </tr>
 
 <!-- row 8 -->
 <tr>
-<td width="20" valign="center" align="center"><a href="#" onClick="turnStatus(8,1)"><img src="blank.gif" width="20" height="20" border="0"></a></td>
-<td width="20" valign="center" align="center"><a href="#" onClick="turnStatus(8,2)"><img src="blank.gif" width="20" height="20" border="0"></a></td>
-<td width="20" valign="center" align="center"><a href="#" onClick="turnStatus(8,3)"><img src="blank.gif" width="20" height="20" border="0"></a></td>
-<td width="20" valign="center" align="center"><a href="#" onClick="turnStatus(8,4)"><img src="blank.gif" width="20" height="20" border="0"></a></td>
+<td class="peg"><a href="#" onClick="turnStatus(8,1)"><img src="blank.gif" /></a></td>
+<td class="peg"><a href="#" onClick="turnStatus(8,2)"><img src="blank.gif" /></a></td>
+<td class="peg"><a href="#" onClick="turnStatus(8,3)"><img src="blank.gif" /></a></td>
+<td class="peg"><a href="#" onClick="turnStatus(8,4)"><img src="blank.gif" /></a></td>
 
-<td width="10" valign="center" align="center"><img src="blank.gif" width="10" height="20" border="0"></td>
+<td class="clue"><img src="blank.gif" width="10" height="20" border="0"></td>
 
-<td width="10" valign="center" align="center"><img src="blank.gif" width="10" height="10" border="0"></td>
-<td width="10" valign="center" align="center"><img src="blank.gif" width="10" height="10" border="0"></td>
-<td width="10" valign="center" align="center"><img src="blank.gif" width="10" height="10" border="0"></td>
-<td width="10" valign="center" align="center"><img src="blank.gif" width="10" height="10" border="0"></td>
+<td class="clue"><img src="blank.gif" /></td>
+<td class="clue"><img src="blank.gif" /></td>
+<td class="clue"><img src="blank.gif" /></td>
+<td class="clue"><img src="blank.gif" /></td>
 
-<td width="75" valign="center" align="center"><a href="#" onClick="turnStatus(8,10)"><img src="blank.gif" width="75" height="20" border="0"></a></td>
+<td class="action"><a href="#" onClick="turnStatus(8,10)"><img src="blank.gif" /></a></td>
 </tr>
 
 <!-- row 9 -->
 <tr>
-<td width="20" valign="center" align="center"><a href="#" onClick="turnStatus(9,1)"><img src="blank.gif" width="20" height="20" border="0"></a></td>
-<td width="20" valign="center" align="center"><a href="#" onClick="turnStatus(9,2)"><img src="blank.gif" width="20" height="20" border="0"></a></td>
-<td width="20" valign="center" align="center"><a href="#" onClick="turnStatus(9,3)"><img src="blank.gif" width="20" height="20" border="0"></a></td>
-<td width="20" valign="center" align="center"><a href="#" onClick="turnStatus(9,4)"><img src="blank.gif" width="20" height="20" border="0"></a></td>
+<td class="peg"><a href="#" onClick="turnStatus(9,1)"><img src="blank.gif" /></a></td>
+<td class="peg"><a href="#" onClick="turnStatus(9,2)"><img src="blank.gif" /></a></td>
+<td class="peg"><a href="#" onClick="turnStatus(9,3)"><img src="blank.gif" /></a></td>
+<td class="peg"><a href="#" onClick="turnStatus(9,4)"><img src="blank.gif" /></a></td>
 
-<td width="10" valign="center" align="center"><img src="blank.gif" width="10" height="20" border="0"></td>
+<td class="clue"><img src="blank.gif" width="10" height="20" border="0"></td>
 
-<td width="10" valign="center" align="center"><img src="blank.gif" width="10" height="10" border="0"></td>
-<td width="10" valign="center" align="center"><img src="blank.gif" width="10" height="10" border="0"></td>
-<td width="10" valign="center" align="center"><img src="blank.gif" width="10" height="10" border="0"></td>
-<td width="10" valign="center" align="center"><img src="blank.gif" width="10" height="10" border="0"></td>
+<td class="clue"><img src="blank.gif" /></td>
+<td class="clue"><img src="blank.gif" /></td>
+<td class="clue"><img src="blank.gif" /></td>
+<td class="clue"><img src="blank.gif" /></td>
 
-<td width="75" valign="center" align="center"><a href="#" onClick="turnStatus(9,10)"><img src="blank.gif" width="75" height="20" border="0"></a></td>
+<td class="action"><a href="#" onClick="turnStatus(9,10)"><img src="blank.gif" /></a></td>
 </tr>
 
 <!-- row 10 -->
 <tr>
-<td width="20" valign="center" align="center"><a href="#" onClick="turnStatus(10,1)"><img src="blank.gif" width="20" height="20" border="0"></a></td>
-<td width="20" valign="center" align="center"><a href="#" onClick="turnStatus(10,2)"><img src="blank.gif" width="20" height="20" border="0"></a></td>
-<td width="20" valign="center" align="center"><a href="#" onClick="turnStatus(10,3)"><img src="blank.gif" width="20" height="20" border="0"></a></td>
-<td width="20" valign="center" align="center"><a href="#" onClick="turnStatus(10,4)"><img src="blank.gif" width="20" height="20" border="0"></a></td>
+<td class="peg"><a href="#" onClick="turnStatus(10,1)"><img src="blank.gif" /></a></td>
+<td class="peg"><a href="#" onClick="turnStatus(10,2)"><img src="blank.gif" /></a></td>
+<td class="peg"><a href="#" onClick="turnStatus(10,3)"><img src="blank.gif" /></a></td>
+<td class="peg"><a href="#" onClick="turnStatus(10,4)"><img src="blank.gif" /></a></td>
 
-<td width="10" valign="center" align="center"><img src="blank.gif" width="10" height="20" border="0"></td>
+<td class="clue"><img src="blank.gif" width="10" height="20" border="0"></td>
 
-<td width="10" valign="center" align="center"><img src="blank.gif" width="10" height="10" border="0"></td>
-<td width="10" valign="center" align="center"><img src="blank.gif" width="10" height="10" border="0"></td>
-<td width="10" valign="center" align="center"><img src="blank.gif" width="10" height="10" border="0"></td>
-<td width="10" valign="center" align="center"><img src="blank.gif" width="10" height="10" border="0"></td>
+<td class="clue"><img src="blank.gif" /></td>
+<td class="clue"><img src="blank.gif" /></td>
+<td class="clue"><img src="blank.gif" /></td>
+<td class="clue"><img src="blank.gif" /></td>
 
-<td width="75" valign="center" align="center"><a href="#" onClick="turnStatus(10,10)"><img src="blank.gif" width="75" height="20" border="0"></a></td>
+<td class="action"><a href="#" onClick="turnStatus(10,10)"><img src="blank.gif" /></a></td>
 </tr>
 
 <!-- row 11 -->
 <tr>
-<td width="20" valign="center" align="center"><a href="#" onClick="turnStatus(11,1)"><img src="blank.gif" width="20" height="20" border="0"></a></td>
-<td width="20" valign="center" align="center"><a href="#" onClick="turnStatus(11,2)"><img src="blank.gif" width="20" height="20" border="0"></a></td>
-<td width="20" valign="center" align="center"><a href="#" onClick="turnStatus(11,3)"><img src="blank.gif" width="20" height="20" border="0"></a></td>
-<td width="20" valign="center" align="center"><a href="#" onClick="turnStatus(11,4)"><img src="blank.gif" width="20" height="20" border="0"></a></td>
+<td class="peg"><a href="#" onClick="turnStatus(11,1)"><img src="blank.gif" /></a></td>
+<td class="peg"><a href="#" onClick="turnStatus(11,2)"><img src="blank.gif" /></a></td>
+<td class="peg"><a href="#" onClick="turnStatus(11,3)"><img src="blank.gif" /></a></td>
+<td class="peg"><a href="#" onClick="turnStatus(11,4)"><img src="blank.gif" /></a></td>
 
-<td width="10" valign="center" align="center"><img src="blank.gif" width="10" height="20" border="0"></td>
+<td class="clue"><img src="blank.gif" width="10" height="20" border="0"></td>
 
-<td width="10" valign="center" align="center"><img src="blank.gif" width="10" height="10" border="0"></td>
-<td width="10" valign="center" align="center"><img src="blank.gif" width="10" height="10" border="0"></td>
-<td width="10" valign="center" align="center"><img src="blank.gif" width="10" height="10" border="0"></td>
-<td width="10" valign="center" align="center"><img src="blank.gif" width="10" height="10" border="0"></td>
+<td class="clue"><img src="blank.gif" /></td>
+<td class="clue"><img src="blank.gif" /></td>
+<td class="clue"><img src="blank.gif" /></td>
+<td class="clue"><img src="blank.gif" /></td>
 
-<td width="75" valign="center" align="center"><a href="#" onClick="reloadGame(); return true"><img src="reload.gif" width="75" height="20" border="0"></a></td> </tr>
+<td class="action"><a href="#" onClick="reloadGame(); return true"><img src="reload.gif" /></a></td> </tr>
 </tr>
 
 <!-- row 12 -->
 <tr>
-<td width="20" valign="center" align="center"><a href="#" onClick="turnStatus(12,1)"><img src="blank.gif" width="20" height="20" border="0"></a></td>
-<td width="20" valign="center" align="center"><a href="#" onClick="turnStatus(12,2)"><img src="blank.gif" width="20" height="20" border="0"></a></td>
-<td width="20" valign="center" align="center"><a href="#" onClick="turnStatus(12,3)"><img src="blank.gif" width="20" height="20" border="0"></a></td>
-<td width="20" valign="center" align="center"><a href="#" onClick="turnStatus(12,4)"><img src="blank.gif" width="20" height="20" border="0"></a></td>
+<td class="peg"><a href="#" onClick="turnStatus(12,1)"><img src="blank.gif" /></a></td>
+<td class="peg"><a href="#" onClick="turnStatus(12,2)"><img src="blank.gif" /></a></td>
+<td class="peg"><a href="#" onClick="turnStatus(12,3)"><img src="blank.gif" /></a></td>
+<td class="peg"><a href="#" onClick="turnStatus(12,4)"><img src="blank.gif" /></a></td>
 
-<td width="10" valign="center" align="center"><img src="blank.gif" width="10" height="20" border="0"></td>
+<td class="clue"><img src="blank.gif" width="10" height="20" border="0"></td>
 
-<td width="10" valign="center" align="center"><img src="blank.gif" width="10" height="10" border="0"></td>
-<td width="10" valign="center" align="center"><img src="blank.gif" width="10" height="10" border="0"></td>
-<td width="10" valign="center" align="center"><img src="blank.gif" width="10" height="10" border="0"></td>
-<td width="10" valign="center" align="center"><img src="blank.gif" width="10" height="10" border="0"></td>
+<td class="clue"><img src="blank.gif" /></td>
+<td class="clue"><img src="blank.gif" /></td>
+<td class="clue"><img src="blank.gif" /></td>
+<td class="clue"><img src="blank.gif" /></td>
 
-<td width="75" valign="center" align="center"><a href="#" onClick="revealAnswer(); return true"><img src="reveal.gif" width="75" height="20" border="0"></a></td> </tr>
+<td class="action"><a href="#" onClick="revealAnswer(); return true"><img src="reveal.gif" /></a></td> </tr>
 
 </table>
 
@@ -248,9 +278,6 @@ A{text-decoration:none}
 </table>
 </center>
 
-<div align="right"><font face="verdana" size="-1">
-<a href="../../">[ go home ]</a>
-</font></div>
 
 </body>
 </html>
