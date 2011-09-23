@@ -17,7 +17,6 @@ var colours = [
 ];
 
 var answer,
-    dummyanswer,
     guess,
     turn;
 
@@ -34,7 +33,6 @@ var toggleType = function (element) {
 
 var initializeVariables = function () {
   answer = [];
-  dummyanswer = [];
   guess = [];
   turn = new Matrix(12, 10);
 };
@@ -139,9 +137,13 @@ var gameOver = function (win) {
 
 
 var reportResults = function (i) {
+  var dummyanswer = [];
   var clues = [0, 0, 0, 0, 0];
   var j;
-  dummyanswer = answer;
+
+  for (j=0; j<4; j++) {
+    dummyanswer[j+1] = answer[j+1];
+  }
 
   for (j=1; j<=4; j++) {
     if ( guess[j] == dummyanswer[j] ) {
