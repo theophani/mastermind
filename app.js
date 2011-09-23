@@ -14,7 +14,7 @@ var answer,
     turn;
 
 var initializeBoard = function() {
-  turn = new Matrix(12, 5);
+  turn = new Matrix(9, 5);
   answer = makeAnswer(gameType);
   for (var i=0; i<4; i++) {
     document.images[110+i].src = colours[0];
@@ -23,17 +23,17 @@ var initializeBoard = function() {
 };
 
 var initializeRow = function (i) {
-  if ( i==11 ) {
+  if ( i === 10 ) {
     gameOver(0);
   } else {
-    if ( i>1 ) {
-      document.images[ (i-1)*10 - 1 ].src = "blank.gif";
+    if ( i > 0 ) {
+      document.images[ i * 10 - 1 ].src = "blank.gif";
     }
-    document.images[ i*10 - 1 ].src = "submit.gif";
+    document.images[ (i+1) * 10 - 1 ].src = "submit.gif";
     for (var j=0; j<4; j++){
-      document.images[ (i-1)*10 + j ].src = colours[0];
+      document.images[ i * 10 + j ].src = colours[0];
     }
-    turn[i][5] = 1;
+    turn[i][4] = 1;
   }
 };
 
@@ -57,7 +57,7 @@ var Matrix = function (r, c) {
   var i, j;
   for (i = 1; i<=r; i++) {
     this[i] = [];
-    for (j = 1; j<=c; j++) {
+    for (j = 0; j<c; j++) {
       this[i][j] = 0;
     }
   }
@@ -66,21 +66,21 @@ var Matrix = function (r, c) {
 };
 
 var rotateColour =  function (i, j) {
-  if ( !turn[i][5] ) return;
+  if ( !turn[i][4] ) return;
 
   n = turn[i][j];
   if (n == 6 ) turn[i][j] = 0;
   else turn[i][j] = n+1;
-  document.images[ (i-1)*10 + (j-1) ].src = colours[turn[i][j]];
+  document.images[ i * 10 + j ].src = colours[turn[i][j]];
 };
 
 var submitGuess = function (i) {
-  if ( ! (turn[i][1] && turn[i][2] && turn[i][3] && turn[i][4]) ) return;
+  if ( ! (turn[i][0] && turn[i][1] && turn[i][2] && turn[i][3]) ) return;
 
-  turn[i][5] = 0;
+  turn[i][4] = 0;
 
   var guess = [0, 1, 2, 3].map(function (j) {
-    return turn[i][j+1];
+    return turn[i][j];
   });
 
   var correct = guess.every(function (v, k) {
@@ -161,7 +161,7 @@ var reportResults = function (i, guess) {
 
   // show the result
   [0, 1, 2, 3].forEach(function (j) {
-    document.images[ (i-1)*10 + j + 5 ].src = cluepegs[ clues[j] ];
+    document.images[ i * 10 + j + 5 ].src = cluepegs[ clues[j] ];
   });
 };
 
@@ -173,8 +173,8 @@ var reloadGame = function () {
 
 var revealAnswer = function () {
   var i;
-  for (i=1; i<=10; i++) {
-    turn[i][5] = 0;
+  for (i=0; i<10; i++) {
+    turn[i][4] = 0;
   }
   [0, 1, 2, 3].forEach(function (i) {
     document.images[110+i].src = colours[answer[i]];
