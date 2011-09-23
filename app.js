@@ -11,7 +11,6 @@ var colours = [
 ];
 
 var answer,
-    guess,
     turn;
 
 var toggleType = function (element) {
@@ -27,7 +26,6 @@ var toggleType = function (element) {
 
 var initializeVariables = function () {
   answer = [];
-  guess = [];
   turn = new Matrix(12, 10);
 };
 
@@ -101,6 +99,7 @@ var rotateColour =  function (i, j) {
 };
 
 var submitGuess = function (i) {
+  var guess = [];
   var j;
   turn[i][5] = 0;
   for (j=1; j<=4; j++) {
@@ -109,7 +108,7 @@ var submitGuess = function (i) {
   if ( (guess[1] == answer[1]) && (guess[2] == answer[2]) && (guess[3] == answer[3]) && (guess[4] == answer[4]) ) {
     gameOver(1);
   } else {
-    reportResults(i);
+    reportResults(i, guess);
     initializeNext(i+1);
   }
 };
@@ -130,28 +129,32 @@ var gameOver = function (win) {
 };
 
 
-var reportResults = function (i) {
+var reportResults = function (i, guess) {
   var cluepegs = [
     "blank.gif",
     "black.gif",
     "white.gif"
   ];
+
   var dummyanswer = [];
   var clues = [0, 0, 0, 0];
-  var j;
 
-  for (j=0; j<4; j++) {
+  // build a clone of answer
+  [0, 1, 2, 3].forEach(function (j) {
     dummyanswer[j+1] = answer[j+1];
-  }
+  });
 
-  for (j=0; j<4; j++) {
+  // check for exact matches
+  [0, 1, 2, 3].forEach(function (j) {
     if ( guess[j+1] == dummyanswer[j+1] ) {
       clues[j] = 2;
       guess[j+1] = 0;
       dummyanswer[j+1] = 7;
     }
-  }
-  for (j=0; j<4; j++) {
+  });
+
+  // check for other matches
+  [0, 1, 2, 3].forEach(function (j) {
     if ( guess[1] == dummyanswer[j+1] ) {
       clues[j] = 1;
       guess[1] = 0;
@@ -169,11 +172,15 @@ var reportResults = function (i) {
       guess[4] = 0;
       dummyanswer[j+1] = 7;
     }
-  }
+  });
+
+  // sort result
   clues.sort().reverse();
-  for (j=0; j<4; j++) {
+
+  // show the result
+  [0, 1, 2, 3].forEach(function (j) {
     document.images[ (i-1)*10 + j + 5 ].src = cluepegs[ clues[j] ];
-  }
+  });
 };
 
 var reloadGame = function () {
