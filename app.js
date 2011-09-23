@@ -67,19 +67,20 @@ var initializeNext = function (i) {
 };
 
 var makeAnswer = function (type) {
-  var options = [6, 5, 4, 3, 2, 1];
+  var options = [1, 2, 3, 4, 5, 6];
   var i, j;
   if (type === 1) { // repeated
     for (i = 0; i < 4; i++) {
-      j = Math.round(Math.random() * 5);
+      j = Math.floor(Math.random() * options.length);
       answer[i+1] = options[j];
     }
   } else { // unique
     for (i = 0; i < 4; i++) {
-      j = Math.round(Math.random() * (5 - i));
+      j = Math.floor(Math.random() * (options.length));
       answer[i+1] = options[j];
       options[j] = 0;
-      mySort(options,7-i);
+      options.sort();
+      options.shift();
     }
   }
 };
