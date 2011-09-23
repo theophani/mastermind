@@ -69,15 +69,10 @@ var initializeNext = function (i) {
 var makeAnswer = function (type) {
   var options = [1, 2, 3, 4, 5, 6];
   var i, j;
-  if (type === 1) { // repeated
-    for (i = 0; i < 4; i++) {
-      j = Math.floor(Math.random() * options.length);
-      answer[i+1] = options[j];
-    }
-  } else { // unique
-    for (i = 0; i < 4; i++) {
-      j = Math.floor(Math.random() * (options.length));
-      answer[i+1] = options[j];
+  for (i = 0; i < 4; i++) {
+    j = Math.floor(Math.random() * options.length);
+    answer[i+1] = options[j];
+    if (type === 0) { // unique. remove options
       options[j] = 0;
       options.sort();
       options.shift();
