@@ -13,27 +13,11 @@ var colours = [
 var answer,
     turn;
 
-var toggleType = function (element) {
-  var message = {
-    unique: 'Using unique colour rules.<br /><button>Switch to repeated colour rules</button>',
-    repeated: 'Using repeated colour rules.<br /><button>Switch to unqiue colour rules</button>'
-  };
-
-  gameType = gameType === 0 ? 1 : 0;
-  element.innerHTML = gameType ? message.repeated : message.unique;
-  reloadGame();
-};
-
-var initializeVariables = function () {
-  answer = [];
-  turn = new Matrix(12, 10);
-};
-
 var initializeBoard = function() {
-  initializeVariables();
+  turn = new Matrix(12, 5);
   answer = makeAnswer(gameType);
   for (var i=0; i<4; i++) {
-    document.images[110+i].src = "question.gif";
+    document.images[110+i].src = colours[0];
   }
   initializeRow(1);
 };
@@ -60,7 +44,7 @@ var makeAnswer = function (type) {
   [0, 1, 2, 3].forEach(function (i) {
     j = Math.floor(Math.random() * options.length);
     answer[i] = options[j];
-    if (type === 0) { // unique. remove options
+    if (type === 0) { // unique, therefore remove options
       options[j] = 0;
       options.sort();
       options.shift();
@@ -74,7 +58,7 @@ var Matrix = function (r, c) {
   for (i = 1; i<=r; i++) {
     this[i] = [];
     for (j = 1; j<=c; j++) {
-      this[i][j]     = 0;
+      this[i][j] = 0;
     }
   }
 
@@ -82,11 +66,19 @@ var Matrix = function (r, c) {
 };
 
 var turnStatus = function (i, j) {
+  var guess;
+
   if ( turn[i][5] ) {
     if ( j < 5 ) {
       rotateColour(i,j);
     } else if ( j==10 && turn[i][1] && turn[i][2] && turn[i][3] && turn[i][4] ) {
-      submitGuess(i);
+      turn[i][5] = 0;
+
+      guess = [0, 1, 2, 3].map(function (j) {
+        return turn[i][j+1];
+      });
+
+      submitGuess(i, guess);
     }
   }
 };
@@ -98,15 +90,10 @@ var rotateColour =  function (i, j) {
   document.images[ (i-1)*10 + (j-1) ].src = colours[turn[i][j]];
 };
 
-var submitGuess = function (i) {
-  var correct;
-  var guess = [0, 1, 2, 3].map(function (j) {
-    return turn[i][j+1];
+var submitGuess = function (i, guess) {
+  var correct = guess.every(function (v, k) {
+    return v === answer[k];
   });
-
-  turn[i][5] = 0;
-
-  correct = guess.every(function (v, i) { return v === answer[i] });
 
   if ( correct ) {
     gameOver(1);
@@ -202,5 +189,19 @@ var revealAnswer = function () {
   });
 
 };
+
+var toggleType = function (event) {
+  var element = this;
+  var message = {
+    unique: 'Using unique colour rules.<br /><button>Switch to repeated colour rules</button>',
+    repeated: 'Using repeated colour rules.<br /><button>Switch to unqiue colour rules</button>'
+  };
+
+  gameType = gameType === 0 ? 1 : 0;
+  element.innerHTML = gameType ? message.repeated : message.unique;
+  reloadGame();
+};
+
+document.getElementById('switcher').onclick = toggleType;
 
 initializeBoard();
