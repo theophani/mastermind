@@ -16,10 +16,10 @@ var answer,
 var initializeBoard = function() {
   turn = new Matrix(9, 5);
   answer = makeAnswer(gameType);
-  for (var i=0; i<4; i++) {
+  [0, 1, 2, 3].forEach(function (i) {
     document.images[110+i].src = colours[0];
-  }
-  initializeRow(1);
+  });
+  initializeRow(0);
 };
 
 var initializeRow = function (i) {
@@ -55,7 +55,7 @@ var makeAnswer = function (type) {
 
 var Matrix = function (r, c) {
   var i, j;
-  for (i = 1; i<=r; i++) {
+  for (i = 0; i<r; i++) {
     this[i] = [];
     for (j = 0; j<c; j++) {
       this[i][j] = 0;
