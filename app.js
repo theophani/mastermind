@@ -1,70 +1,62 @@
-function setGameType(type) {
-  GameType = type;
-}
+var gameType = 0;
 
-function toggleType(element) {
+var cluepegs = [
+  "blank.gif",
+  "black.gif",
+  "white.gif"
+];
+
+var colours = [
+  "question.gif",
+  "yellow.gif",
+  "green.gif",
+  "blue.gif",
+  "red.gif",
+  "grey.gif",
+  "orange.gif"
+];
+
+var answer,
+    dummyanswer,
+    guess,
+    clues,
+    dummy,
+    turn;
+
+var toggleType = function (element) {
   var message = {
     unique: 'Using unique colour rules.<br /><button>Switch to repeated colour rules</button>',
     repeated: 'Using repeated colour rules.<br /><button>Switch to unqiue colour rules</button>'
-  }
+  };
 
-  GameType = GameType === 0 ? 1 : 0;
+  gameType = gameType === 0 ? 1 : 0;
+  element.innerHTML = gameType ? message.repeated : message.unique;
   reloadGame();
-  element.innerHTML = GameType ? message.repeated : message.unique;
-}
+};
 
-function initializeVariables() {
-
+var initializeVariables = function () {
   answer = [];
-
   dummyanswer = [];
-
   guess = [];
-
   clues = [];
-
   dummy = [null, 6, 5, 4, 3, 2, 1];
-
-  rules = [
-    "repeated.gif",
-    "unique.gif"
-  ];
-
-  cluepegs = [
-    "blank.gif",
-    "black.gif",
-    "white.gif"
-  ];
-
-  colours = [
-    "question.gif",
-    "yellow.gif",
-    "green.gif",
-    "blue.gif",
-    "red.gif",
-    "grey.gif",
-    "orange.gif"
-  ];
-
   turn = new Matrix(12, 10);
+};
 
-}
 
-
-function initializeBoard() {
+var initializeBoard = function() {
   initializeVariables();
-  makeAnswer(GameType);
+  makeAnswer(gameType);
   for (var i=0; i<4; i++) {
     document.images[110+i].src = "question.gif";
   }
   initializeNext(1);
-}
+};
 
-function initializeNext(i) {
+var initializeNext = function (i) {
   if ( i==11 ) {
     gameOver(0);
-  }
-  else {
+  } else {
     if ( i>1 ) {
       document.images[ (i-1)*10 - 1 ].src = "blank.gif";
     }
@@ -74,18 +66,16 @@ function initializeNext(i) {
     }
     turn[i][5] = 1;
   }
-}
+};
 
-
-function makeAnswer(type) {
+var makeAnswer = function (type) {
   var i, j;
   if (type == 1) { // repeated
     for (i = 1; i<=4; i++) {
       j = Math.round( 1 + Math.random()*(6-1) );
       answer[i] = dummy[j];
     }
-  }
-  else { // unique
+  } else { // unique
     for (i = 1; i<=4; i++) {
       j = Math.round( 1 + Math.random()*(6-i) );
       answer[i] = dummy[j];
@@ -93,9 +83,9 @@ function makeAnswer(type) {
       mySort(dummy,7-i);
     }
   }
-}
+};
 
-function Matrix(r,c) {
+var Matrix = function (r, c) {
   var i, j;
   for (i = 1; i<=r; i++) {
     this[i] = [];
@@ -105,29 +95,26 @@ function Matrix(r,c) {
   }
 
   return this;
-}
+};
 
-function turnStatus(i,j) {
+var turnStatus = function (i, j) {
   if ( turn[i][5] ) {
     if ( j < 5 ) {
       rotateColour(i,j);
-    }
-    else if ( j==10 && turn[i][1] && turn[i][2] && turn[i][3] && turn[i][4] ) {
+    } else if ( j==10 && turn[i][1] && turn[i][2] && turn[i][3] && turn[i][4] ) {
       submitGuess(i);
     }
   }
-}
+};
 
-
-function rotateColour(i,j) {
+var rotateColour =  function (i, j) {
   n = turn[i][j];
   if (n == 6 ) turn[i][j] = 0;
   else turn[i][j] = n+1;
   document.images[ (i-1)*10 + (j-1) ].src = colours[turn[i][j]];
-}
+};
 
-
-function submitGuess(i) {
+var submitGuess = function (i) {
   var j;
   turn[i][5] = 0;
   for (j=1; j<=4; j++) {
@@ -135,31 +122,29 @@ function submitGuess(i) {
   }
   if ( (guess[1] == answer[1]) && (guess[2] == answer[2]) && (guess[3] == answer[3]) && (guess[4] == answer[4]) ) {
     gameOver(1);
-  }
-  else {
+  } else {
     reportResults(i);
     initializeNext(i+1);
   }
-}
+};
 
-function gameOver(win) {
+var gameOver = function (win) {
   if (win) {
     document.images[100].src = "letterW.gif";
     document.images[101].src = "letterI.gif";
     document.images[102].src = "letterN.gif";
     document.images[103].src = "exclaim.gif";
-  }
-  else     {
+  } else {
     document.images[100].src = "letterL.gif";
     document.images[101].src = "letterO.gif";
     document.images[102].src = "letterS.gif";
     document.images[103].src = "letterE.gif";
   }
-  RevealAnswer();
-}
+  revealAnswer();
+};
 
 
-function reportResults(i) {
+var reportResults = function (i) {
   var j;
   for (j=1; j<=4; j++) {
     dummyanswer[j] = answer[j];
@@ -177,18 +162,15 @@ function reportResults(i) {
       clues[j] = 1;
       guess[1] = 0;
       dummyanswer[j] = 7;
-    }
-    else if ( guess[2] == dummyanswer[j] ) {
+    } else if ( guess[2] == dummyanswer[j] ) {
       clues[j] = 1;
       guess[2] = 0;
       dummyanswer[j] = 7;
-    }
-    else if ( guess[3] == dummyanswer[j] ) {
+    } else if ( guess[3] == dummyanswer[j] ) {
       clues[j] = 1;
       guess[3] = 0;
       dummyanswer[j] = 7;
-    }
-    else if ( guess[4] == dummyanswer[j] ) {
+    } else if ( guess[4] == dummyanswer[j] ) {
       clues[j] = 1;
       guess[4] = 0;
       dummyanswer[j] = 7;
@@ -198,10 +180,9 @@ function reportResults(i) {
   for (j=1; j<=4; j++) {
     document.images[ (i-1)*10 + j + 4 ].src = cluepegs[ clues[j] ];
   }
-}
+};
 
-
-function mySort(myArray, n) {
+var mySort = function (myArray, n) {
   var i, j, temp;
   for (i=1; i<n; i++) {
     for (j=(i+1); j<=n; j++) {
@@ -212,15 +193,15 @@ function mySort(myArray, n) {
       }
     }
   }
-}
+};
 
-function reloadGame() {
+var reloadGame = function () {
   var i;
   for (i=0; i<109; i++) document.images[i].src = "blank.gif";
   initializeBoard();
-}
+};
 
-function revealAnswer() {
+var revealAnswer = function () {
   var i;
   for (i=1; i<=10; i++) {
     turn[i][5] = 0;
@@ -229,7 +210,6 @@ function revealAnswer() {
     document.images[109+i].src = colours[answer[i]];
   }
 
-}
+};
 
-setGameType(0);
 initializeBoard();
