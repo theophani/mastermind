@@ -138,55 +138,42 @@ var gameOver = function (win) {
 
 var reportResults = function (i) {
   var dummyanswer = [];
-  var clues = [0, 0, 0, 0, 0];
+  var clues = [0, 0, 0, 0];
   var j;
 
   for (j=0; j<4; j++) {
     dummyanswer[j+1] = answer[j+1];
   }
 
-  for (j=1; j<=4; j++) {
-    if ( guess[j] == dummyanswer[j] ) {
+  for (j=0; j<4; j++) {
+    if ( guess[j+1] == dummyanswer[j+1] ) {
       clues[j] = 2;
-      guess[j] = 0;
-      dummyanswer[j] = 7;
+      guess[j+1] = 0;
+      dummyanswer[j+1] = 7;
     }
   }
-  for (j=1; j<=4; j++) {
-    if ( guess[1] == dummyanswer[j] ) {
+  for (j=0; j<4; j++) {
+    if ( guess[1] == dummyanswer[j+1] ) {
       clues[j] = 1;
       guess[1] = 0;
-      dummyanswer[j] = 7;
-    } else if ( guess[2] == dummyanswer[j] ) {
+      dummyanswer[j+1] = 7;
+    } else if ( guess[2] == dummyanswer[j+1] ) {
       clues[j] = 1;
       guess[2] = 0;
       dummyanswer[j] = 7;
-    } else if ( guess[3] == dummyanswer[j] ) {
+    } else if ( guess[3] == dummyanswer[j+1] ) {
       clues[j] = 1;
       guess[3] = 0;
-      dummyanswer[j] = 7;
-    } else if ( guess[4] == dummyanswer[j] ) {
+      dummyanswer[j+1] = 7;
+    } else if ( guess[4] == dummyanswer[j+1] ) {
       clues[j] = 1;
       guess[4] = 0;
-      dummyanswer[j] = 7;
+      dummyanswer[j+1] = 7;
     }
   }
-  mySort(clues,4);
-  for (j=1; j<=4; j++) {
-    document.images[ (i-1)*10 + j + 4 ].src = cluepegs[ clues[j] ];
-  }
-};
-
-var mySort = function (myArray, n) {
-  var i, j, temp;
-  for (i=1; i<n; i++) {
-    for (j=(i+1); j<=n; j++) {
-      if ( myArray[j] > myArray[i]) {
-        temp = myArray[i];
-        myArray[i] = myArray[j];
-        myArray[j] = temp;
-      }
-    }
+  clues.sort().reverse();
+  for (j=0; j<4; j++) {
+    document.images[ (i-1)*10 + j + 5 ].src = cluepegs[ clues[j] ];
   }
 };
 
