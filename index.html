@@ -12,7 +12,23 @@ body {
   text-align: center;
   font-family: 'Lucida Sans', 'Lucida Grande', 'Lucida Sans Unicode', sans-serif;
   font-size: 100%;
+  line-height: 1em;
 }
+button {
+  color: white;
+  background-color: #444;
+  font-size: 1em;
+  cursor: pointer;
+  border: 0;
+  border-radius: 0.25em;
+  padding: 0.25em 0.5em;
+  margin: 0.5em 0;
+}
+button:hover {
+  background-color: #666;
+}
+
+
 a {
   text-decoration: none;
   color: #DED4AE;
@@ -45,13 +61,6 @@ td.action img {
 }
 span {
   cursor: pointer;
-}
-#switcher {
-  cursor: pointer;
-  color: #DED4AE;
-}
-#switcher:hover {
-  color: #9CB468;
 }
 #game {
   margin: 2em auto;
@@ -270,7 +279,10 @@ span {
 
 </table>
 
-<p id="switcher" onClick="toggleType(this); return true">Use repeat colour rules</p>
+<p id="switcher" onClick="toggleType(this); return true">
+  Using unique colour rules.<br />
+  <button>Switch to repeated colour rules</button>
+</p>
 
 <script src="app.js"></script>
 

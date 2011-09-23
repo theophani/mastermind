@@ -3,9 +3,14 @@ function setGameType(type) {
 }
 
 function toggleType(element) {
+  var message = {
+    unique: 'Using unique colour rules.<br /><button>Switch to repeated colour rules</button>',
+    repeated: 'Using repeated colour rules.<br /><button>Switch to unqiue colour rules</button>'
+  }
+
   GameType = GameType === 0 ? 1 : 0;
   reloadGame();
-  element.innerText = GameType ? 'Use unique colour rules' : 'Use repeat colour rules';
+  element.innerHTML = GameType ? message.repeated : message.unique;
 }
 
 function initializeVariables() {
