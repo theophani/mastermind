@@ -15,6 +15,7 @@ var colours = [
 var initializeBoard = function() {
   turn = new Matrix(10, 5);
   var answer = makeAnswer(gameType);
+
   [0, 1, 2, 3].forEach(function (i) {
     document.images[110+i].src = colours[0];
   });
@@ -121,48 +122,44 @@ var gameOver = function (win) {
 };
 
 
-var reportResults = function (i, guess, answer) {
+var reportResults = function (i, guess, reference) {
   var cluepegs = [
     "blank.gif",
     "black.gif",
     "white.gif"
   ];
 
-  var dummyanswer = [];
-  var clues = [0, 0, 0, 0];
+  var answer = reference.map(function (v) { return v; });
 
-  // build a clone of answer
-  [0, 1, 2, 3].forEach(function (j) {
-    dummyanswer[j] = answer[j];
-  });
+  var clues = [0, 0, 0, 0];
 
   // check for exact matches
   [0, 1, 2, 3].forEach(function (j) {
-    if ( guess[j] == dummyanswer[j] ) {
+    if ( guess[j] == answer[j] ) {
       clues[j] = 2;
       guess[j] = 0;
-      dummyanswer[j] = 7;
+      answer[j] = 7;
     }
   });
 
   // check for other matches
   [0, 1, 2, 3].forEach(function (j) {
-    if ( guess[0] == dummyanswer[j] ) {
+    if ( guess[0] == answer[j] ) {
       clues[j] = 1;
       guess[0] = 0;
-      dummyanswer[j] = 7;
-    } else if ( guess[1] == dummyanswer[j] ) {
+      answer[j] = 7;
+    } else if ( guess[1] == answer[j] ) {
       clues[j] = 1;
       guess[1] = 0;
-      dummyanswer[j] = 7;
-    } else if ( guess[2] == dummyanswer[j] ) {
+      answer[j] = 7;
+    } else if ( guess[2] == answer[j] ) {
       clues[j] = 1;
       guess[2] = 0;
-      dummyanswer[j] = 7;
-    } else if ( guess[3] == dummyanswer[j] ) {
+      answer[j] = 7;
+    } else if ( guess[3] == answer[j] ) {
       clues[j] = 1;
       guess[3] = 0;
-      dummyanswer[j] = 7;
+      answer[j] = 7;
     }
   });
 
