@@ -65,32 +65,24 @@ var Matrix = function (r, c) {
   return this;
 };
 
-var turnStatus = function (i, j) {
-  var guess;
-
-  if ( turn[i][5] ) {
-    if ( j < 5 ) {
-      rotateColour(i,j);
-    } else if ( j==10 && turn[i][1] && turn[i][2] && turn[i][3] && turn[i][4] ) {
-      turn[i][5] = 0;
-
-      guess = [0, 1, 2, 3].map(function (j) {
-        return turn[i][j+1];
-      });
-
-      submitGuess(i, guess);
-    }
-  }
-};
-
 var rotateColour =  function (i, j) {
+  if ( !turn[i][5] ) return;
+
   n = turn[i][j];
   if (n == 6 ) turn[i][j] = 0;
   else turn[i][j] = n+1;
   document.images[ (i-1)*10 + (j-1) ].src = colours[turn[i][j]];
 };
 
-var submitGuess = function (i, guess) {
+var submitGuess = function (i) {
+  if ( ! (turn[i][1] && turn[i][2] && turn[i][3] && turn[i][4]) ) return;
+
+  turn[i][5] = 0;
+
+  var guess = [0, 1, 2, 3].map(function (j) {
+    return turn[i][j+1];
+  });
+
   var correct = guess.every(function (v, k) {
     return v === answer[k];
   });
