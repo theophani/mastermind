@@ -1,11 +1,5 @@
 var gameType = 0;
 
-var cluepegs = [
-  "blank.gif",
-  "black.gif",
-  "white.gif"
-];
-
 var colours = [
   "question.gif",
   "yellow.gif",
@@ -137,6 +131,11 @@ var gameOver = function (win) {
 
 
 var reportResults = function (i) {
+  var cluepegs = [
+    "blank.gif",
+    "black.gif",
+    "white.gif"
+  ];
   var dummyanswer = [];
   var clues = [0, 0, 0, 0];
   var j;
