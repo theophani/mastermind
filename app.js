@@ -74,13 +74,13 @@ function initializeNext(i) {
 
 function makeAnswer(type) {
   var i, j;
-  if (type == 1) {
+  if (type == 1) { // repeated
     for (i = 1; i<=4; i++) {
       j = Math.round( 1 + Math.random()*(6-1) );
       answer[i] = dummy[j];
     }
   }
-  else {
+  else { // unique
     for (i = 1; i<=4; i++) {
       j = Math.round( 1 + Math.random()*(6-i) );
       answer[i] = dummy[j];
@@ -99,7 +99,7 @@ function Matrix(r,c) {
     }
   }
 
-      return this;
+  return this;
 }
 
 function turnStatus(i,j) {
