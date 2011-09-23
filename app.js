@@ -5,7 +5,7 @@ function setGameType(type) {
 function toggleType(element) {
   GameType = GameType === 0 ? 1 : 0;
   reloadGame();
-  element.innerText = GameType ? 'Use unique colour rules.' : 'Use repeat colour rules.';
+  element.innerText = GameType ? 'Use unique colour rules' : 'Use repeat colour rules';
 }
 
 function initializeVariables() {
@@ -225,3 +225,6 @@ function revealAnswer() {
   }
 
 }
+
+setGameType(0);
+initializeBoard();
