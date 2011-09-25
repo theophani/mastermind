@@ -1,0 +1,67 @@
+<html>
+<head>
+  <title>Mastermind Tests</title>
+</head>
+<body>
+<div>
+  <img /><img /><img /><img /><img /><img /><img /><img /><img /><img />
+  <img /><img /><img /><img /><img /><img /><img /><img /><img /><img />
+  <img /><img /><img /><img /><img /><img /><img /><img /><img /><img />
+  <img /><img /><img /><img /><img /><img /><img /><img /><img /><img />
+  <img /><img /><img /><img /><img /><img /><img /><img /><img /><img />
+  <img /><img /><img /><img /><img /><img /><img /><img /><img /><img />
+  <img /><img /><img /><img /><img /><img /><img /><img /><img /><img />
+  <img /><img /><img /><img /><img /><img /><img /><img /><img /><img />
+  <img /><img /><img /><img /><img /><img /><img /><img /><img /><img />
+  <img /><img /><img /><img /><img /><img /><img /><img /><img /><img />
+  <img /><img /><img /><img /><img /><img /><img /><img /><img /><img />
+  <img /><img /><img /><img /><img /><img /><img /><img /><img /><img />
+  <img /><img /><img /><img /><img /><img /><img /><img /><img /><img />
+  <img /><img /><img /><img /><img /><img /><img /><img /><img /><img />
+  <img /><img /><img /><img /><img /><img /><img /><img /><img /><img />
+</div>
+<script src="app.js"></script>
+<script>
+// tests! :o
+
+var body = document.body;
+
+var echo = function (message) {
+  var element = document.createElement('p');
+  element.innerText = message;
+  document.body.appendChild(element);
+};
+
+var should = function(a, b) {
+
+  var equal = true;
+
+  a.forEach(function(v, i) {
+    equal = v === b[i] && equal;
+  });
+
+  equal = (a.length === b.length);
+
+  if (equal) {
+    echo(true);
+  } else {
+    echo(a, 'is not ===', b);
+  }
+
+};
+
+var ref = ['b', 'a', 'f', 'a'];
+
+should( reportResults(['a', 'd', 'e', 'a'], ref), [2, 1] );
+should( reportResults(['b', 'b', 'a', 'b'], ref), [2, 1] );
+should( reportResults(['c', 'b', 'f', 'a'], ref), [2, 2, 1] );
+should( reportResults(['a', 'b', 'a', 'e'], ref), [1, 1, 1] );
+should( reportResults(['c', 'a', 'a', 'e'], ref), [2, 1] );
+should( reportResults(['f', 'f', 'e', 'e'], ref), [1] );
+should( reportResults(['f', 'f', 'e', 'e'], ['e', 'a', 'b', 'c']), [1] );
+should( reportResults(['f', 'f', 'e', 'e'], ['a', 'b', 'c', 'e']), [2] );
+should( reportResults(['a', 'e', 'a', 'e'], ref), [1, 1] );
+
+</script>
+</body>
+</html>

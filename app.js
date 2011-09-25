@@ -180,37 +180,8 @@ var toggleType = function (event) {
   reloadGame();
 };
 
-document.getElementById('switcher').onclick = toggleType;
+if (document.getElementById('switcher')) {
+  document.getElementById('switcher').onclick = toggleType;
+}
 
 initializeBoard();
-
-// tests! :o
-
-var should = function(a, b) {
-
-  var equal = true;
-
-  a.forEach(function(v, i) {
-    equal = v === b[i] && equal;
-  });
-
-  equal = (a.length === b.length);
-
-  if (equal) {
-    console.log(true);
-  } else {
-    console.log(a, 'is not ===', b);
-  }
-};
-
-var ref = ['b', 'a', 'f', 'a'];
-
-should( reportResults(['a', 'd', 'e', 'a'], ref), [2, 1] );
-should( reportResults(['b', 'b', 'a', 'b'], ref), [2, 1] );
-should( reportResults(['c', 'b', 'f', 'a'], ref), [2, 2, 1] );
-should( reportResults(['a', 'b', 'a', 'e'], ref), [1, 1, 1] );
-should( reportResults(['c', 'a', 'a', 'e'], ref), [2, 1] );
-should( reportResults(['f', 'f', 'e', 'e'], ref), [1] );
-should( reportResults(['f', 'f', 'e', 'e'], ['e', 'a', 'b', 'c']), [1] );
-should( reportResults(['f', 'f', 'e', 'e'], ['a', 'b', 'c', 'e']), [2] );
-should( reportResults(['a', 'e', 'a', 'e'], ref), [1, 1] );
