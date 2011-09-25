@@ -122,17 +122,18 @@ var gameOver = function (win) {
 };
 
 
-var reportResults = function (guess, answer) {
+var reportResults = function (picks, answer) {
+
   var clues = [];
 
-  var found = guess.map(function( pick, index ) {
+  var found = picks.map(function( pick, index ) {
     if (pick === answer[index]) {
       clues.push(2);
     }
     return (pick === answer[index]) ? pick : undefined;
   });
 
-  guess.forEach(function( pick, index ) {
+  picks.forEach(function( pick, index ) {
 
     // ignore if this index contained an exact match
     if (found[index] !== undefined) return;
