@@ -46,7 +46,7 @@ var initializeBoard = function() {
     if ( correct ) {
       gameOver(1);
     } else {
-      reportResults(i, guess, answer);
+      displayResults(i, reportResults(guess, answer));
       initializeRow(i+1);
     }
   };
@@ -122,55 +122,47 @@ var gameOver = function (win) {
 };
 
 
-var reportResults = function (i, guess, reference) {
+var reportResults = function (guess, reference) {
+  var answer = reference.map(function (v) { return v; });
+  var picks = guess.map(function (v) { return v; });
+
+  var exact_indices = picks.map(function( pick, index ) {
+    return (pick === reference[index]) ? index : -1;
+  });
+
+  var right_indices = [];
+
+  picks.forEach(function( pick, index ) {
+    if (exact_indices.indexOf(index) > -1) return;
+    if (right_indices.indexOf(reference.indexOf(pick)) > -1) return;
+    if (exact_indices.indexOf(reference.indexOf(pick)) > -1) return;
+
+    right_indices.push(reference.indexOf(pick));
+  });
+
+  exact_indices = exact_indices.map(function(v) { return v < 0 ? 0 : 2; }).filter(function(v) { return v > 0; });
+  right_indices = right_indices.map(function(v) { return v < 0 ? 0 : 1; }).filter(function(v) { return v > 0; });
+
+  return exact_indices.concat(right_indices);
+};
+
+var displayResults = function (i, clues) {
   var cluepegs = [
     "blank.gif",
     "black.gif",
     "white.gif"
   ];
 
-  var answer = reference.map(function (v) { return v; });
-
-  var clues = [0, 0, 0, 0];
-
-  // check for exact matches
-  [0, 1, 2, 3].forEach(function (j) {
-    if ( guess[j] === answer[j] ) {
-      clues[j] = 2;
-      guess[j] = 0;
-      answer[j] = 7;
-    }
+  var padded_clues = [0,1,2,3].map(function(v) {
+    if (clues[v]) return clues[v];
+    return 0;
   });
-
-  // check for other matches
-  [0, 1, 2, 3].forEach(function (j) {
-    if ( guess[0] === answer[j] ) {
-      guess[0] = 0;
-      clues[j] = 1;
-      answer[j] = 7;
-    } else if ( guess[1] === answer[j] ) {
-      guess[1] = 0;
-      clues[j] = 1;
-      answer[j] = 7;
-    } else if ( guess[2] === answer[j] ) {
-      guess[2] = 0;
-      clues[j] = 1;
-      answer[j] = 7;
-    } else if ( guess[3] === answer[j] ) {
-      guess[3] = 0;
-      clues[j] = 1;
-      answer[j] = 7;
-    }
-  });
-
-  // sort result
-  clues.sort().reverse();
 
   // show the result
   [0, 1, 2, 3].forEach(function (j) {
-    document.images[ i * 10 + j + 5 ].src = cluepegs[ clues[j] ];
+    document.images[ i * 10 + j + 5 ].src = cluepegs[ padded_clues[j] ];
   });
-};
+}
 
 var reloadGame = function () {
   var i;
@@ -193,3 +185,31 @@ var toggleType = function (event) {
 document.getElementById('switcher').onclick = toggleType;
 
 initializeBoard();
+
+// tests! :o
+
+var should = function(a, b) {
+
+  var equal = true;
+
+  a.forEach(function(v, i) {
+    equal = v === b[i] && equal;
+  });
+
+  if (equal) {
+    console.log(true);
+  } else {
+    console.log(a, 'is not ===', b);
+  }
+};
+
+var ref = ['b', 'a', 'f', 'a'];
+
+should( reportResults(['a', 'd', 'e', 'a'], ref), [2, 1] );
+should( reportResults(['b', 'b', 'a', 'b'], ref), [2, 1] );
+should( reportResults(['c', 'b', 'f', 'a'], ref), [2, 2, 1] );
+should( reportResults(['a', 'b', 'a', 'e'], ref), [1, 1, 1] );
+should( reportResults(['c', 'a', 'a', 'e'], ref), [2, 1] );
+should( reportResults(['f', 'f', 'e', 'e'], ref), [1] );
+should( reportResults(['f', 'f', 'e', 'e'], ['e', 'a', 'b', 'c']), [1] );
+should( reportResults(['f', 'f', 'e', 'e'], ['a', 'b', 'c', 'e']), [2] );
