@@ -122,28 +122,27 @@ var gameOver = function (win) {
 };
 
 
-var reportResults = function (guess, reference) {
-  var answer = reference.map(function (v) { return v; });
-  var picks = guess.map(function (v) { return v; });
+var reportResults = function (guess, answer) {
 
-  var exact_indices = picks.map(function( pick, index ) {
-    return (pick === reference[index]) ? index : -1;
+  var clues = [];
+
+  var exact_indices = guess.map(function( pick, index ) {
+    if (pick === answer[index]) clues.push(2);
+    return (pick === answer[index]) ? index : -1;
   });
 
   var right_indices = [];
 
-  picks.forEach(function( pick, index ) {
+  guess.forEach(function( pick, index ) {
     if (exact_indices.indexOf(index) > -1) return;
-    if (right_indices.indexOf(reference.indexOf(pick)) > -1) return;
-    if (exact_indices.indexOf(reference.indexOf(pick)) > -1) return;
+    if (right_indices.indexOf(answer.indexOf(pick)) > -1) return;
+    if (exact_indices.indexOf(answer.indexOf(pick)) > -1) return;
 
-    right_indices.push(reference.indexOf(pick));
+    if (answer.indexOf(pick)) clues.push(1);
+    right_indices.push(answer.indexOf(pick));
   });
 
-  exact_indices = exact_indices.map(function(v) { return v < 0 ? 0 : 2; }).filter(function(v) { return v > 0; });
-  right_indices = right_indices.map(function(v) { return v < 0 ? 0 : 1; }).filter(function(v) { return v > 0; });
-
-  return exact_indices.concat(right_indices);
+  return clues;
 };
 
 var displayResults = function (i, clues) {
