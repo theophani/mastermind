@@ -126,34 +126,22 @@ var reportResults = function (picks, answer) {
 
   var clues = [];
 
-  var found = picks.map(function( pick, index ) {
-    if (pick === answer[index]) {
-      clues.push(2);
-    }
-    return (pick === answer[index]) ? pick : undefined;
-  });
-
   picks.forEach(function( pick, index ) {
+    if (pick === answer[index]) {
+      clues[index] = 2;
+    } else {
 
-    // ignore if this index contained an exact match
-    if (found[index] !== undefined) return;
+      var position = answer.map(function(v,i) { return i; }).filter(function(i) {
+        return clues[i] === undefined && answer[i] === pick;
+      })[0];
 
-    var locations = answer.filter(function (v) {
-      return pick === v;
-    }).length;
-
-    var found_locations = found.filter(function (v) {
-      return pick === v;
-    }).length;
-
-    if (found_locations < locations) {
-      clues.push(1);
-      found[index] = pick;
+      if (position !== undefined) {
+        clues[position] = 1;
+      }
     }
-
   });
 
-  return clues;
+  return clues.filter(function (v) { return v !== undefined }).sort().reverse();
 };
 
 var displayResults = function (i, clues) {
