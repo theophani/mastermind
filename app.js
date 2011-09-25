@@ -123,23 +123,33 @@ var gameOver = function (win) {
 
 
 var reportResults = function (guess, answer) {
-
   var clues = [];
 
-  var exact_indices = guess.map(function( pick, index ) {
-    if (pick === answer[index]) clues.push(2);
-    return (pick === answer[index]) ? index : -1;
+  var found = guess.map(function( pick, index ) {
+    if (pick === answer[index]) {
+      clues.push(2);
+    }
+    return (pick === answer[index]) ? pick : undefined;
   });
 
-  var right_indices = [];
-
   guess.forEach(function( pick, index ) {
-    if (exact_indices.indexOf(index) > -1) return;
-    if (right_indices.indexOf(answer.indexOf(pick)) > -1) return;
-    if (exact_indices.indexOf(answer.indexOf(pick)) > -1) return;
 
-    if (answer.indexOf(pick)) clues.push(1);
-    right_indices.push(answer.indexOf(pick));
+    // ignore if this index contained an exact match
+    if (found[index] !== undefined) return;
+
+    var locations = answer.filter(function (v) {
+      return pick === v;
+    }).length;
+
+    var found_locations = found.filter(function (v) {
+      return pick === v;
+    }).length;
+
+    if (found_locations < locations) {
+      clues.push(1);
+      found[index] = pick;
+    }
+
   });
 
   return clues;
@@ -195,6 +205,8 @@ var should = function(a, b) {
     equal = v === b[i] && equal;
   });
 
+  equal = (a.length === b.length);
+
   if (equal) {
     console.log(true);
   } else {
@@ -212,3 +224,4 @@ should( reportResults(['c', 'a', 'a', 'e'], ref), [2, 1] );
 should( reportResults(['f', 'f', 'e', 'e'], ref), [1] );
 should( reportResults(['f', 'f', 'e', 'e'], ['e', 'a', 'b', 'c']), [1] );
 should( reportResults(['f', 'f', 'e', 'e'], ['a', 'b', 'c', 'e']), [2] );
+should( reportResults(['a', 'e', 'a', 'e'], ref), [1, 1] );
