@@ -1,6 +1,9 @@
 <html>
 <head>
   <title>Mastermind Tests</title>
+  <style>
+    p { margin: 0; }
+  </style>
 </head>
 <body>
 <div>
@@ -20,7 +23,7 @@
   <img /><img /><img /><img /><img /><img /><img /><img /><img /><img />
   <img /><img /><img /><img /><img /><img /><img /><img /><img /><img />
 </div>
-<script src="app.js"></script>
+<script src="mm.js"></script>
 <script>
 // tests! :o
 
@@ -50,17 +53,32 @@ var should = function(a, b) {
 
 };
 
+var game = new Mastermind();
+
 var ref = ['b', 'a', 'f', 'a'];
 
-should( reportResults(['a', 'd', 'e', 'a'], ref), [2, 1] );
-should( reportResults(['b', 'b', 'a', 'b'], ref), [2, 1] );
-should( reportResults(['c', 'b', 'f', 'a'], ref), [2, 2, 1] );
-should( reportResults(['a', 'b', 'a', 'e'], ref), [1, 1, 1] );
-should( reportResults(['c', 'a', 'a', 'e'], ref), [2, 1] );
-should( reportResults(['f', 'f', 'e', 'e'], ref), [1] );
-should( reportResults(['f', 'f', 'e', 'e'], ['e', 'a', 'b', 'c']), [1] );
-should( reportResults(['f', 'f', 'e', 'e'], ['a', 'b', 'c', 'e']), [2] );
-should( reportResults(['a', 'e', 'a', 'e'], ref), [1, 1] );
+should( game.reportResults(['a', 'd', 'e', 'a'], ref), [2, 1] );
+should( game.reportResults(['b', 'b', 'a', 'b'], ref), [2, 1] );
+should( game.reportResults(['c', 'b', 'f', 'a'], ref), [2, 2, 1] );
+should( game.reportResults(['a', 'b', 'a', 'e'], ref), [1, 1, 1] );
+should( game.reportResults(['c', 'a', 'a', 'e'], ref), [2, 1] );
+should( game.reportResults(['f', 'f', 'e', 'e'], ref), [1] );
+should( game.reportResults(['f', 'f', 'e', 'e'], ['e', 'a', 'b', 'c']), [1] );
+should( game.reportResults(['f', 'f', 'e', 'e'], ['a', 'b', 'c', 'e']), [2] );
+should( game.reportResults(['a', 'e', 'a', 'e'], ref), [1, 1] );
+
+ref = [1, 0, 5, 0];
+
+should( game.reportResults([0, 3, 4, 0], ref), [2, 1] );
+should( game.reportResults([1, 1, 0, 1], ref), [2, 1] );
+should( game.reportResults([2, 1, 5, 0], ref), [2, 2, 1] );
+should( game.reportResults([0, 1, 0, 4], ref), [1, 1, 1] );
+should( game.reportResults([2, 0, 0, 4], ref), [2, 1] );
+should( game.reportResults([5, 5, 4, 4], ref), [1] );
+should( game.reportResults([5, 5, 4, 4], [4, 0, 1, 2]), [1] );
+should( game.reportResults([5, 5, 4, 4], [0, 1, 2, 4]), [2] );
+should( game.reportResults([0, 4, 0, 4], ref), [1, 1] );
+
 
 </script>
 </body>
