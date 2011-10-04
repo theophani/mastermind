@@ -1,46 +1,32 @@
-var Mastermind = function (gameType) {
+var Mastermind = function (type) {
 
-  gameType = (gameType === 1) ? 1 : 0;
+  var type = (type === 1) ? 1 : 0;
 
   var turn;
 
+  var guesses;
+
   var answer;
 
-  var colours = [
-    "question.gif",
-    "yellow.gif",
-    "green.gif",
-    "blue.gif",
-    "red.gif",
-    "grey.gif",
-    "orange.gif"
-  ];
+  var initialize = function (gameType) {
+    type = (gameType !== undefined) ? gameType : type;
+    guesses = (function (r, c) {
+      var i;
+      var m = [];
 
-  var initializeBoard = function(type) {
-    type = (type !== undefined) ? type : gameType;
-    turn = new Matrix(10, 5);
-    answer = makeAnswer(gameType);
-
-    [0, 1, 2, 3].forEach(function (i) {
-      document.images[110+i].src = colours[0];
-    });
-
-    initializeRow(0);
-  };
-
-  var initializeRow = function (i) {
-    if ( i === 10 ) {
-      gameOver(0);
-    } else {
-      if ( i > 0 ) {
-        document.images[ i * 10 - 1 ].src = "blank.gif";
+      while (m.length < r) {
+        m.push([]);
+        i = m.length - 1;
+        while (m[i].length < c) {
+          m[i].push(0);
+        }
       }
-      document.images[ (i+1) * 10 - 1 ].src = "submit.gif";
-      [0, 1, 2, 3].forEach(function (j) {
-        document.images[ i * 10 + j ].src = colours[0];
-      });
-      turn[i][4] = 1;
-    }
+
+      return m;
+    })(10, 5);
+
+    turn = 0;
+    answer = makeAnswer(type);
   };
 
   var makeAnswer = function (type) {
@@ -59,23 +45,11 @@ var Mastermind = function (gameType) {
     return answer;
   };
 
-  var revealAnswer = function () {
-    var i;
-    for (i=0; i<10; i++) {
-      turn[i][4] = 0;
-    }
-    [0, 1, 2, 3].forEach(function (i) {
-      document.images[110+i].src = colours[answer[i]];
-    });
-  };
-
   var submitGuess = function (i) {
-    if ( ! (turn[i][0] && turn[i][1] && turn[i][2] && turn[i][3]) ) return;
-
-    turn[i][4] = 0;
+    if ( ! (guesses[i][0] && guesses[i][1] && guesses[i][2] && guesses[i][3]) ) return false;
 
     var guess = [0, 1, 2, 3].map(function (j) {
-      return turn[i][j];
+      return guesses[i][j];
     });
 
     var correct = guess.every(function (v, k) {
@@ -83,50 +57,27 @@ var Mastermind = function (gameType) {
     });
 
     if ( correct ) {
-      gameOver(1);
+      turn = -1;
+      return true;
     } else {
-      displayResults(i, reportResults(guess, answer));
-      initializeRow(i+1);
-    }
-  };
-
-
-  var Matrix = function (r, c) {
-    var i, j;
-    for (i = 0; i<r; i++) {
-      this[i] = [];
-      for (j = 0; j<c; j++) {
-        this[i][j] = 0;
+      turn = i + 1;
+      if (turn === 10) {
+        turn = -1;
       }
+      return reportResults(guess, answer);
     }
-
-    return this;
   };
 
   var rotateColour =  function (i, j) {
-    if ( !turn[i][4] ) return;
+    var n = guesses[i][j];
 
-    n = turn[i][j];
-    if (n === 6 ) turn[i][j] = 0;
-    else turn[i][j] = n+1;
-    document.images[ i * 10 + j ].src = colours[turn[i][j]];
+    if ( turn != i ) return n;
+
+    if (n === 6 ) guesses[i][j] = 0;
+    else guesses[i][j] = n + 1;
+
+    return guesses[i][j];
   };
-
-  var gameOver = function (win) {
-    if (win) {
-      document.images[100].src = "letterW.gif";
-      document.images[101].src = "letterI.gif";
-      document.images[102].src = "letterN.gif";
-      document.images[103].src = "exclaim.gif";
-    } else {
-      document.images[100].src = "letterL.gif";
-      document.images[101].src = "letterO.gif";
-      document.images[102].src = "letterS.gif";
-      document.images[103].src = "letterE.gif";
-    }
-    revealAnswer();
-  };
-
 
   var reportResults = function (picks, answer) {
 
@@ -150,30 +101,26 @@ var Mastermind = function (gameType) {
     return clues.filter(function (v) { return v !== undefined }).sort().reverse();
   };
 
-  var displayResults = function (i, clues) {
-    var cluepegs = [
-      "blank.gif",
-      "black.gif",
-      "white.gif"
-    ];
+  var getTurn = function () {
+    return turn;
+  };
 
-    var padded_clues = [0,1,2,3].map(function(v) {
-      if (clues[v]) return clues[v];
-      return 0;
-    });
+  var getType = function () {
+    return type;
+  };
 
-    // show the result
-    [0, 1, 2, 3].forEach(function (j) {
-      document.images[ i * 10 + j + 5 ].src = cluepegs[ padded_clues[j] ];
-    });
-  }
+  var getAnswer = function () {
+    turn = -1;
+    return answer;
+  };
 
   return {
     reportResults: reportResults,
     rotateColour: rotateColour,
-    initializeBoard: initializeBoard,
+    initialize: initialize,
     submitGuess: submitGuess,
-    revealAnswer: revealAnswer,
-    gameType: gameType
+    getType: getType,
+    getTurn: getTurn,
+    getAnswer: getAnswer
   };
 };
